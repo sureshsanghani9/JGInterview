@@ -609,5 +609,10 @@ namespace JG_Prospect.BLL
             return InstallUserDAL.Instance.InsertUserOTP(userID, userType, OTP);
         }
 
+        public void BookmarkUnStarInstallUser(int UserId, int BookmarkById, string action)
+        {
+            InstallUserDAL.Instance.BookmarkUnStarInstallUser(UserId, BookmarkById, action);
+        }
+
     }
 }

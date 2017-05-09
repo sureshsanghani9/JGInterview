@@ -191,6 +191,13 @@
             color: #fff;
             cursor: pointer;
         }
+
+        .btnBookmark {
+            border: 0 !important;
+            padding: 2px !important;
+            float: right;
+            position: relative;
+        }
     </style>
     <script type="text/javascript">
 
@@ -637,7 +644,7 @@
                 <asp:UpdatePanel ID="upUsers" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
 
-                        <div style="float: left; padding-top: 10px; /*margin-bottom: -40px;*/">
+                        <div style="float: left; padding-top: 10px; /*margin-bottom: -40px; */">
 
                             <asp:TextBox ID="txtSearch" runat="server" CssClass="textbox" placeholder="search users" MaxLength="15" />
                             <asp:Button ID="btnSearchGridData" runat="server" Text="Search" Style="display: none;" class="btnSearc" OnClick="btnSearchGridData_Click" />
@@ -662,7 +669,7 @@
                             <PagerStyle HorizontalAlign="Right" CssClass="pagination-ys" />
                             <Columns>
 
-                                <asp:TemplateField HeaderText="Action" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="5%" ItemStyle-Width="5%">
+                                <asp:TemplateField HeaderText="Action" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="5%" ItemStyle-Width="5%" SortExpression="BookmarkedInstallUserId">
                                     <ItemTemplate>
                                         <asp:CheckBox ID="chkSelected" runat="server" />
                                         <br />
@@ -674,6 +681,8 @@
                                         <br />
                                         <asp:LinkButton ID="lnkDelete" Text="Delete" CommandName="DeleteSalesUser" runat="server" OnClientClick="return confirm('Are you sure you want to delete this user?')"
                                             CommandArgument='<%#Eval("Id")%>'></asp:LinkButton>
+                                        <br />
+                                        <asp:ImageButton ID="imgBookmark" runat="server" CssClass="btnBookmark" BorderWidth="0"/>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField ShowHeader="True" HeaderText="Id# <br /> Designation" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="10%" ItemStyle-Width="10%" ControlStyle-ForeColor="Black"
@@ -857,7 +866,7 @@
                     </td>
                     <td>
                         <div style="float: left;">
-                            <div id="divBulkUploadFile" class="dropzone work-file" data-hidden="<%=hdnBulkUploadFile.ClientID%>" 
+                            <div id="divBulkUploadFile" class="dropzone work-file" data-hidden="<%=hdnBulkUploadFile.ClientID%>"
                                 data-accepted-files=".csv,.xlsx" data-upload-path-code="1">
                                 <div class="fallback">
                                     <input name="WorkFile" type="file" />
@@ -868,13 +877,14 @@
                             </div>
                         </div>
                         <div class="btn_sec" style="float: left;">
-                            <asp:Button ID="btnUploadNew" runat="server" Text="Upload" OnClick="btnUploadNew_Click" CssClass="ui-button" style="padding:0px 10px 0px 10px!important;" />
+                            <asp:Button ID="btnUploadNew" runat="server" Text="Upload" OnClick="btnUploadNew_Click" CssClass="ui-button" Style="padding: 0px 10px 0px 10px!important;" />
                         </div>
                         <div class="hide">
                             <input id="hdnBulkUploadFile" runat="server" type="hidden" />
                             <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClientClick="return ValidateFile()" OnClick="btnUpload_Click" />
-                            
-                            <label>Upload Prospects using xlsx file: <asp:FileUpload ID="BulkProspectUploader" runat="server" /></label>
+
+                            <label>Upload Prospects using xlsx file:
+                                <asp:FileUpload ID="BulkProspectUploader" runat="server" /></label>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="BulkProspectUploader" runat="server" ErrorMessage="Select file to import data." ValidationGroup="BulkImport"></asp:RequiredFieldValidator>
                         </div>
                     </td>
@@ -1223,11 +1233,11 @@
     <%--Popup Stars--%>
     <div class="hide">
         <div id="divBulkUploadUserErrors" runat="server" title="Information" data-width="900px">
-            <div style="padding:5px 10px;">
-                Below records contain empty values for mandatory fields. Please update cells marked by <span style="color: blue;font-weight:bold;text-align: center;font-size: 20px;">x</span> below in your file and upload again. If you see several empty rows at the end of the records, please delete those empty lines from your file.
+            <div style="padding: 5px 10px;">
+                Below records contain empty values for mandatory fields. Please update cells marked by <span style="color: blue; font-weight: bold; text-align: center; font-size: 20px;">x</span> below in your file and upload again. If you see several empty rows at the end of the records, please delete those empty lines from your file.
             </div>
-            <div style="max-height:500px; height:500px; overflow: auto;">
-                <asp:GridView ID="grdBulkUploadUserErrors" runat="server" AutoGenerateColumns="false" 
+            <div style="max-height: 500px; height: 500px; overflow: auto;">
+                <asp:GridView ID="grdBulkUploadUserErrors" runat="server" AutoGenerateColumns="false"
                     CssClass="table" Width="100%" CellSpacing="0" CellPadding="0" GridLines="Vertical">
                     <EmptyDataRowStyle ForeColor="White" HorizontalAlign="Center" />
                     <HeaderStyle CssClass="trHeader " />
@@ -1259,7 +1269,7 @@
                                 <%#grdBulkUploadUserErrors_GetCellText(Eval("Status")) %>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Source*"  HeaderStyle-Width="60" ItemStyle-Width="60">
+                        <asp:TemplateField HeaderText="Source*" HeaderStyle-Width="60" ItemStyle-Width="60">
                             <ItemTemplate>
                                 <%#grdBulkUploadUserErrors_GetCellText(Eval("Source")) %>
                             </ItemTemplate>
